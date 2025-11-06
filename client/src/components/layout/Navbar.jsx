@@ -1,0 +1,116 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { menuItems } from "../../lib/menuItems";
+
+const Navbar = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+  const searchRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowResults(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const allMenuItems = menuItems.flatMap((section) => section.items);
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query.trim().length > 0) {
+      const results = allMenuItems.filter((item) =>
+        item.label.toLowerCase().includes(query)
+      );
+      setFilteredItems(results);
+      setShowResults(true);
+    } else {
+      setFilteredItems([]);
+      setShowResults(false);
+    }
+  };
+
+  const handleItemClick = (href) => {
+    const base = currentUser?.role ? `/${currentUser.role}` : "";
+    navigate(href ? `${base}/${href}` : base);
+    setSearchQuery("");
+    setShowResults(false);
+  };
+
+  return (
+    <div className="flex items-center justify-between p-4 bg-white ml-2 rounded-lg mb-3 md:gap-4 lg:gap-16 md:px-6">
+      <Link to="/" className="h-full w-full">
+        <img
+          src="/images/logo.png"
+          className="w-20 h-20 rounded-full object-contain"
+          alt="logo"
+        />
+      </Link>
+
+      <div
+        ref={searchRef}
+        className="hidden md:flex items-center gap-2 text-xs rounded-full ring-[1px] bg-[#ffffff] hover:ring-gray-400 ring-gray-200 px-2 relative"
+      >
+        <img src="/images/search.png" className="w-[14px] h-[14px]" alt="search" />
+        <input
+          type="text"
+          placeholder="Search menu..."
+          className="w-[250px] p-2 bg-transparent outline-none"
+          value={searchQuery}
+          onChange={handleSearch}
+          onFocus={() => searchQuery.length > 0 && setShowResults(true)}
+        />
+
+        {showResults && (
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-3 hover:bg-gray-100 cursor-pointer flex items-center gap-3"
+                  onClick={() => handleItemClick(item.href)}
+                >
+                  <img
+                    src={item.icon || "/images/default-icon.png"}
+                    alt={item.label}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-sm">{item.label}</span>
+                </div>
+              ))
+            ) : (
+              <div className="p-3 text-sm text-gray-500">No results found</div>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="flex items-center gap-6 justify-end w-full lg:px-8">
+        {currentUser && (
+          <div
+            className="p-2 flex flex-row gap-3 items-center border border-slate-200 rounded-full hover:shadow-xl cursor-pointer"
+          >
+            <div className="flex flex-col">
+              <span className="text-xs font-medium">{currentUser.name}</span>
+            </div>
+            <img
+              src={currentUser.image || "/images/avatar.png"}
+              alt="user"
+              className="rounded-full object-cover w-7 h-7"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
