@@ -12,4 +12,5 @@ router.get("/:id",verifyToken,getEvent);
 router.put("/:id",verifyToken, updateEvent);
 router.delete("/:id",verifyToken,deleteEvent);
 
+
 export default router;
