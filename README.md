@@ -123,6 +123,7 @@ ORIGIN= http://localhost:3000
   title: String,
   startingTime: String,
   endingTime: String,
+  desc: String,
   status: Enum ['BUSY', 'SWAPPABLE', 'SWAP_PENDING'],
   userId: ObjectId (ref: 'User'),
   createdAt: Date
