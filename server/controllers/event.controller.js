@@ -38,6 +38,27 @@ export const getEvents = async (req, res, next) => {
   }
 };
 
+
+export const getAllEvents = async (req, res, next) => {
+  try {
+    const { sort = "asc" } = req.query;
+    const sortOptions = { endingTime: -1 };
+
+    if (sort === "desc") {
+      sortOptions.endingTime = 1;
+    }
+
+    const events = await Event.find().sort(sortOptions);
+
+    res.status(200).json({
+      message: "All Events List",
+      events,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getEvent = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
