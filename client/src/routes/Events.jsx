@@ -123,7 +123,7 @@ const Events = () => {
             onSearch={handleSearch} 
             placeholder="Search events..." 
           />
-          <div className="flex items-center gap-4 self-end">
+          <div className="flex items-center gap-4 self-end pr-2">
             <button 
               onClick={handleSort}
               className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow shadow-lg border-slate-100 border cursor-pointer hover:bg-lightBlue"

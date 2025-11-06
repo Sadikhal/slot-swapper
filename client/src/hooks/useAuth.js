@@ -18,7 +18,7 @@ export const useAuth = () => {
       const res = await apiRequest.post("/auth/register", formData);
       dispatch(loginSuccess(res.data));
       toast.success("Registration Successful");
-      navigate("/login");
+      navigate("/auth/login");
       return res.data;
     } catch (err) {
       dispatch(
