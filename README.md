@@ -18,6 +18,8 @@ A full-stack web application that enables users to swap busy time slots with eac
 - **Marketplace** - Browse available swappable slots from other users
 - **Request Management** - Handle incoming and outgoing swap requests
 - **Responsive Design** - Optimized for desktop and mobile devices
+- **Advanced Searching** - Searching of pages and events
+
 
 ## 🛠 Tech Stack
 
@@ -121,6 +123,7 @@ ORIGIN= http://localhost:3000
   title: String,
   startingTime: String,
   endingTime: String,
+  desc: String,
   status: Enum ['BUSY', 'SWAPPABLE', 'SWAP_PENDING'],
   userId: ObjectId (ref: 'User'),
   createdAt: Date
@@ -200,7 +203,8 @@ ORIGIN= http://localhost:3000
 4. **Browse Marketplace**: View other users' available slots
 5. **Request Swap**: Offer your slot in exchange for someone else's
 6. **Manage Requests**: Accept or reject incoming swap proposals
-7. **Automatic Updates**: Calendars update instantly when swaps are accepted
+7. **Searching and sorting**: Events can sorting and searching with any field like title or desc 
+8. **Automatic Updates**: Calendars update instantly when swaps are accepted
 
 ## 🎨 UI Components
 
