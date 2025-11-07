@@ -116,9 +116,9 @@ const Events = () => {
 
   return (
     <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0 w-full h-full ">
-      <div className="flex items-center justify-between">
-        <h1 className="block text-base text-nowrap md:text-lg font-semibold">All Events</h1>
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+      <div className="flex md:items-center justify-between flex-row">
+        <h1 className="block text-nowrap text-lg md:text-xl font-semibold">All Events</h1>
+        <div className="flex flex-col md:flex-row items-center gap-4 w-[60%]  md:w-auto mr-2">
           <TableSearch 
             onSearch={handleSearch}
             placeholder="Search events..." 
