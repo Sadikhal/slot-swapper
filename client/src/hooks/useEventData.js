@@ -63,7 +63,6 @@ export default function useEventData() {
         setEventData((prev) => prev.map((e) => (e._id === id ? res.data.event : e)));
         setFilteredData((prev) => prev.map((e) => (e._id === id ? res.data.event : e)));
       }
-      toast.success("Event updated successfully");
       return res.data?.event;
     } catch (err) {
       setError(err.response?.data?.message || "Update failed");

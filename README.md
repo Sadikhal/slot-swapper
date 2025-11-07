@@ -63,7 +63,7 @@ MONGO_URL=mongodb://localhost:27017/slotswapper
 JWT_SECRET=your_jwt_secret_key_here
 
 #  Client URL (for CORS)
-ORIGIN= http://localhost:3000
+ORIGIN= http://localhost:5173
 ```
 
 ### Installation Steps
