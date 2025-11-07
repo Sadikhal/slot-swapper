@@ -66,58 +66,80 @@ JWT_SECRET=your_jwt_secret_key_here
 ORIGIN= http://localhost:5173
 ```
 
-### Installation Steps
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd slot-swapper
-   ```
+### 🧰 Steps to Run
 
-2. **Install backend dependencies**
-   ```bash
-   cd server
-   npm install
-   ```
+```bash
+# 1️⃣ Clone repository
+git clone <repository-url>
+cd slot-swapper
 
-3. **Install frontend dependencies**
-   ```bash
-   cd client
-   npm install
-  
-   ```
+# 2️⃣ Backend setup
+cd server
+npm install
 
-4. **Start the development servers**
+# 3️⃣ Frontend setup
+cd ../client
+npm install
 
-   **Run  frontend**
-   ```bash
-   # From root directory - starts both servers
-   npm run dev
-   ```
+# 4️⃣ Run both (from root)
+npm run dev
 
-   ** Run servers **
-   ```bash
-   # Terminal 1 - Start backend
-   node app.js
-   ```
+# OR run backend manually
+cd server
+node app.js
+```
 
-5. **Access the application**
-   - Frontend: https://slot-swapper-3m9e.onrender.com
-   - Backend API: https://slot-swappers.onrender.com/api
+---
+
+## 🌐 Access the Application
+
+| Service                     | URL                                                                              |
+| :-------------------------- | :------------------------------------------------------------------------------- |
+| 🖥️ **Frontend**            | [https://slot-swapper-3m9e.onrender.com](https://slot-swapper-3m9e.onrender.com) |
+| ⚙️ **Backend API Base URL** | `https://slot-swappers.onrender.com/api`                                         |
+
+---
+
+## 🔐 Demo Access (For HR Evaluation)
+
+> To make evaluation simple, you can log in directly — no signup required.
+
+**🔗 Login Page:**
+👉 [https://slot-swapper-3m9e.onrender.com/auth/login](https://slot-swapper-3m9e.onrender.com/auth/login)
+
+**🧑‍💻 Credentials:**
+
+```
+Email: sadikhalipv@gmail.com
+Password: Slot@098
+```
+
+> (Note: “S” in **Slot** is capital.)
+
+Once logged in, you can explore the full **SlotSwapper Dashboard**, **Event Management**, **Swap Marketplace**, and **Requests System** instantly.
+
+---
 
 ## 🗄 Database Schema
 
-### User Model
+<details>
+<summary><b>👤 User Model</b></summary>
+
 ```javascript
 {
   name: String,
-  email: String (unique),
-  password: String (hashed),
+  email: String, // unique
+  password: String, // hashed
   createdAt: Date
 }
 ```
 
-### Event/Slot Model
+</details>
+
+<details>
+<summary><b>🗓️ Event / Slot Model</b></summary>
+
 ```javascript
 {
   title: String,
@@ -130,7 +152,11 @@ ORIGIN= http://localhost:5173
 }
 ```
 
-### SwapRequest Model
+</details>
+
+<details>
+<summary><b>🔄 SwapRequest Model</b></summary>
+
 ```javascript
 {
   requesterId: ObjectId (ref: 'User'),
@@ -143,89 +169,114 @@ ORIGIN= http://localhost:5173
 }
 ```
 
+</details>
+
+---
+
 ## 🔌 API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/user` - Get current user
-- `POST /api/auth/logout` - logout the current user
-  
+<details>
+<summary><b>🔑 Authentication</b></summary>
 
-### Events
-- `GET /api/event` - Get user's events
-- `POST /api/event` - Create new event
-- `PUT /api/event/:id` - Update event
-- `DELETE /api/event/:id` - Delete event
-### Swap System
-- `GET /api/swap-request` - Get available slots from other users
-- `POST /api/swap-request` - Create swap request
-- `POST /api/swap-request/:requestId` - Respond to swap request
-- `GET /api/swap-request/req-slots` - Get swap requests
+* `POST /api/auth/register` – Register new user
+* `POST /api/auth/login` – Login user
+* `GET /api/auth/user` – Get current logged user
+* `POST /api/auth/logout` – Logout current user
 
-## 🎯 Core Features Implementation
+</details>
 
-### Authentication Flow
-- JWT tokens stored in HTTP-only cookies
-- Protected routes with authentication middleware
+<details>
+<summary><b>🗓️ Events</b></summary>
 
+* `GET /api/event` – Get user’s events
+* `POST /api/event` – Create new event
+* `PUT /api/event/:id` – Update event
+* `DELETE /api/event/:id` – Delete event
 
-### Swap Logic
-1. **Slot Marking**: Users mark busy slots as "swappable"
-2. **Discovery**: Browse other users' swappable slots
-3. **Request**: Initiate swap with own swappable slot
-4. **Response**: Accept/reject incoming requests
-5. **Execution**: Automatic calendar updates on acceptance
+</details>
 
-### State Management
-- React redux for global state
-- Optimistic updates for better UX
+<details>
+<summary><b>🔄 Swap System</b></summary>
+
+* `GET /api/swap-request` – Get swappable slots from other users
+* `POST /api/swap-request` – Create swap request
+* `POST /api/swap-request/:requestId` – Respond (accept/reject)
+* `GET /api/swap-request/req-slots` – View incoming/outgoing requests
+
+</details>
+
+---
+
+## 🎯 Core Logic
+
+1. User marks a slot as **SWAPPABLE**
+2. Another user browses available slots
+3. Initiates a **swap request**
+4. Receiver **accepts or rejects**
+5. On acceptance, times are **automatically exchanged**
+6. User can search and sort the events
+   
+
+---
+
+## 🧠 State Management
+
+* Global state handled with **Redux**
+* **Optimistic updates** for instant feedback
+
+---
 
 ## 🚀 Deployment
 
-### Backend Deployment (Example: Render)
-1. Build command: `npm install`
-2. Start command: `node app.js`
-3. Environment variables in deployment platform
+| Platform              | Command                                                |
+| :-------------------- | :----------------------------------------------------- |
+| **Backend (Render)**  | Build: `npm install` → Start: `node app.js`            |
+| **Frontend (Render)** | Build: `cd client && npm run build` → Output: `client` |
 
-### Frontend Deployment (Example: render)
-1. Build command: `cd client && npm run build`
-2. Output directory: `client`
-3. Environment variables for API URL
-
-
+---
 
 ## 📱 Usage Guide
 
-1. **Sign Up/Login**: Create an account or login
-2. **Add Events**: Create busy time slots in your calendar
-3. **Mark Swappable**: Click "Make Swappable" on events you're willing to swap
-4. **Browse Marketplace**: View other users' available slots
-5. **Request Swap**: Offer your slot in exchange for someone else's
-6. **Manage Requests**: Accept or reject incoming swap proposals
-7. **Searching and sorting**: Events can sorting and searching with any field like title or desc 
-8. **Automatic Updates**: Calendars update instantly when swaps are accepted
+1. 🧾 **Login or Register**
+2. ➕ **Create Events**
+3. ♻️ **Mark as Swappable**
+4. 🔍 **Browse Marketplace**
+5. 🔁 **Request Swaps**
+6. ✅ **Accept/Reject Requests**
+7. 🔎 **Search or Sort Events**
+8. 🪄 **Automatic Calendar Updates**
+
+---
 
 ## 🎨 UI Components
 
-Built with Shadcn/ui components including:
-- Custom form components with validation
-- Modal dialogs for swap requests
-- Toast notifications for user feedback
-- Responsive calendar views
-- Clean, modern design system
+Built with **Shadcn/ui** & **TailwindCSS**:
+
+* ✨ Form validation
+* 💬 Toast notifications
+* 🪟 Modal dialogs for swap confirmation
+* 🗓️ Responsive calendar view
+* 🎨 Clean, modern design
+
+---
 
 ## 🔒 Security Features
 
-- Password hashing with bcrypt
-- JWT token expiration
-- Protected API routes
-- Input validation and sanitization
-- CORS configuration
+* 🔐 Password hashing (bcryptjs)
+* 🕒 JWT token expiration
+* 🛡️ Protected API routes
+* 🧹 Input validation & sanitization
+* 🌍 CORS enabled
 
+---
 
 ## 👨‍💻 Developer
 
-Built with ❤️ using the MERN stack for ServiceHive Full Stack Intern technical challenge.
+Built with ❤️ using the **MERN Stack**
+for **ServiceHive Full Stack Intern Technical Challenge**
 
 ---
+
+⭐ **If you liked this project**, give it a star on GitHub — it helps a lot!
+
+```
