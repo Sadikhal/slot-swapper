@@ -52,7 +52,7 @@ export const useAuth = () => {
       await apiRequest.post("/auth/logout");
       dispatch(logout());
       toast.success("You have been logged out.");
-      navigate("/login");
+      navigate("/auth/login");
     } catch (err) {
      toast.success("Logout Failed");
     } 
