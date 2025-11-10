@@ -10,7 +10,7 @@ import { connect } from './lib/db.js';
 
 dotenv.config();
 
-const app = express(); // ✅ create the express app
+const app = express(); 
 
 // Middlewares
 app.use(cookieParser());
