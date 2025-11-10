@@ -5,10 +5,10 @@ import { ScrollArea } from "../../components/ui/ScrollArea";
 import { menuItems } from "../../lib/menuItems";
 import { useAuth } from "../../hooks/useAuth";
 
-
 const Menu = ({ open }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const { logout } = useAuth();
-  
+
   const handleLogout = async () => {
     await logout();
   };
@@ -26,9 +26,10 @@ const Menu = ({ open }) => {
             <span className="hidden lg:block font-poppins text-gray-600 font-light my-3">
               {section.title}
             </span>
+
             {section.items.map((item, index) => {
-              if (item.href === "logout") {
-                return (
+              return item.href === "logout" ? (
+                currentUser ? (
                   <button
                     key={index}
                     onClick={handleLogout}
@@ -43,12 +44,29 @@ const Menu = ({ open }) => {
                       className="min-h-5 h-5 min-w-5 w-5"
                     />
                     <span className={cn(!open && "hidden lg:block")}>
-                      {item.label}
+                      Logout
                     </span>
                   </button>
-                );
-              }
-              return (
+                ) : (
+                  <Link
+                    key={index}
+                    to="/auth/login"
+                    className={cn(
+                      "flex items-center gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight text-sm",
+                      open ? "justify-start" : "justify-center lg:justify-start"
+                    )}
+                  >
+                    <img
+                      src="/images/login.png"
+                      alt=""
+                      className="min-h-5 h-5 min-w-5 w-5"
+                    />
+                    <span className={cn(!open && "hidden lg:block")}>
+                      Login
+                    </span>
+                  </Link>
+                )
+              ) : (
                 <Link
                   to={item.href}
                   key={index}

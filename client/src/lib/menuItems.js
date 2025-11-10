@@ -1,4 +1,4 @@
-export const menuItems =   [
+export const menuItems = [
   {
     title: "MENU",
     items: [
@@ -7,23 +7,21 @@ export const menuItems =   [
         label: "Home",
         href: "",
       },
-       {
+      {
         icon: "/images/calendar.png",
         label: "MarketPlace",
         href: "marketPlace",
       },
-
       {
         icon: "/images/banner.png",
-        label: "notifications",
+        label: "Notifications",
         href: "notifications",
       },
       {
         icon: "/images/logout.png",
-        label: "Logout",
+        label: "Logout", 
         href: "logout",
       },
-      
     ],
   },
 ];

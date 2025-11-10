@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
   const { currentUser, loading } = useSelector((state) => state.user);
   const location = useLocation();
   const dispatch = useDispatch();
-  const [isChecking, setIsChecking] = useState(!currentUser);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     let mounted = true;
@@ -22,24 +22,26 @@ const ProtectedRoute = () => {
         const res = await apiRequest.get("/auth/user");
         if (mounted && res?.data) {
           dispatch(loginSuccess(res.data));
-          console.log("data ", res.data);
+        } else {
+          dispatch(loginFailure("No session"));
         }
       } catch (err) {
+        const message = err.response?.data?.message || "Session check failed. Please login again.";
         if (mounted) {
-          dispatch(loginFailure(err.response?.data?.message || "Session check failed. Please login again."));
-          toast.error(err.response?.data?.message || "Session expired. Please login again.");
+          dispatch(loginFailure(message));
+          toast.error(message);
         }
       } finally {
         if (mounted) setIsChecking(false);
       }
     };
 
-    if (!currentUser && isChecking) checkSession();
+    checkSession();
 
     return () => {
       mounted = false;
     };
-  }, [currentUser, dispatch, isChecking]);
+  }, [dispatch]);
 
   if (isChecking || loading) {
     return (
